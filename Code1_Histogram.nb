@@ -1,0 +1,452 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     19410,        444]
+NotebookOptionsPosition[     18866,        424]
+NotebookOutlinePosition[     19454,        446]
+CellTagsIndexPosition[     19411,        443]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "Approximating", " ", "the", " ", "probability", " ", "distribution", " ", 
+    "using", " ", "the", " ", "Central", " ", "Limit", " ", "Theorem"}], 
+   "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"n", "=", 
+     RowBox[{"2", "^", "10"}]}], ";"}], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{"Degree", " ", "of", " ", "polynomial", " ", 
+      RowBox[{"x", "^", "n"}]}], "+", "1"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"B", "=", "3"}], ";"}], " ", 
+   RowBox[{"(*", 
+    RowBox[{"Bounding", " ", "value", " ", "of", " ", "support"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"m", " ", "=", " ", 
+     RowBox[{"2", "*", "B"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"centredBinomialValues", " ", "=", " ", 
+     RowBox[{"Range", "[", 
+      RowBox[{
+       RowBox[{"-", "B"}], ",", "B"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"centredBinomialPDF", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{"0", ",", 
+       RowBox[{"m", "+", "1"}]}], "]"}]}], ";"}], 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Entries", " ", "will", " ", "be", " ", "probabilites", " ", "for", " ", 
+      "each", " ", "value", " ", "between", " ", "and", " ", "including"}], 
+     " ", "-", 
+     RowBox[{"B", " ", "and", " ", 
+      RowBox[{"B", "."}]}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"centredBinomialPDF", "[", 
+      RowBox[{"[", 
+       RowBox[{"B", "+", "1"}], "]"}], "]"}], "=", 
+     RowBox[{
+      RowBox[{"Binomial", "[", 
+       RowBox[{"m", ",", 
+        RowBox[{"B", "-", "0"}]}], "]"}], "*", 
+      RowBox[{
+       RowBox[{"(", "0.5", ")"}], "^", "m"}]}]}], ";"}], 
+   RowBox[{"(*", 
+    RowBox[{
+    "Set", " ", "the", " ", "probability", " ", "for", " ", "the", " ", 
+     "value", " ", "0"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"i", "=", "1"}], ",", " ", 
+     RowBox[{"i", "\[LessEqual]", " ", "B"}], ",", " ", 
+     RowBox[{"i", "++"}], ",", 
+     RowBox[{"(*", 
+      RowBox[{
+       RowBox[{"Symmetric", " ", "distribution", " ", "so", " ", 
+        RowBox[{"P", "[", 
+         RowBox[{"X", "=", "x"}], "]"}]}], " ", "=", " ", 
+       RowBox[{
+        RowBox[{"P", "[", 
+         RowBox[{"X", "=", 
+          RowBox[{"-", "x"}]}], "]"}], "."}]}], "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"centredBinomialPDF", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"B", "+", "1"}], ")"}], "-", "i"}], "]"}], "]"}], "=", 
+       RowBox[{
+        RowBox[{"Binomial", "[", 
+         RowBox[{"m", ",", 
+          RowBox[{"B", "-", "i"}]}], "]"}], "*", 
+        RowBox[{
+         RowBox[{"(", "0.5", ")"}], "^", "m"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"centredBinomialPDF", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"B", "+", "1"}], ")"}], "+", "i"}], "]"}], "]"}], "=", 
+       RowBox[{
+        RowBox[{"Binomial", "[", 
+         RowBox[{"m", ",", 
+          RowBox[{"B", "-", "i"}]}], "]"}], "*", 
+        RowBox[{
+         RowBox[{"(", "0.5", ")"}], "^", "m"}]}]}], ";"}]}], "]"}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Product", " ", "values", " ", "and", " ", "respective", " ", 
+     RowBox[{"probabilities", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"productValues", " ", "=", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "9"}], ",", 
+       RowBox[{"-", "6"}], ",", 
+       RowBox[{"-", "4"}], ",", 
+       RowBox[{"-", "3"}], ",", 
+       RowBox[{"-", "2"}], ",", 
+       RowBox[{"-", "1"}], ",", "0", ",", "1", ",", "2", ",", "3", ",", "4", 
+       ",", "6", ",", "9"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"productProbs", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{"0", ",", 
+       RowBox[{"Length", "[", "productValues", "]"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"productValue", " ", "=", " ", "0"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"productProb", " ", "=", " ", "0"}], ";"}], "\[IndentingNewLine]",
+    "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Find", " ", "the", " ", "probability", " ", "of", " ", "xy", " ", "for",
+       " ", "each", " ", "pair", " ", 
+      RowBox[{"(", 
+       RowBox[{"x", ",", "y"}], ")"}], " ", "where", " ", "x"}], ",", 
+     RowBox[{"y", " ", "are", " ", "in", " ", 
+      RowBox[{"centredBinomialValues", "."}]}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"i", "=", "1"}], ",", " ", 
+     RowBox[{"i", "\[LessEqual]", " ", 
+      RowBox[{"Length", "[", "centredBinomialValues", "]"}]}], ",", " ", 
+     RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"j", "=", "1"}], ",", " ", 
+       RowBox[{"j", "\[LessEqual]", " ", 
+        RowBox[{"Length", "[", "centredBinomialValues", "]"}]}], ",", " ", 
+       RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"productValue", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"centredBinomialValues", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "*", 
+          RowBox[{"centredBinomialValues", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"productProb", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"centredBinomialPDF", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "*", 
+          RowBox[{"centredBinomialPDF", "[", 
+           RowBox[{"[", "j", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"For", "[", 
+         RowBox[{
+          RowBox[{"k", "=", "1"}], ",", 
+          RowBox[{"k", "\[LessEqual]", " ", 
+           RowBox[{"Length", "[", "productValues", "]"}]}], ",", " ", 
+          RowBox[{"k", "++"}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"productValue", " ", "\[Equal]", " ", 
+              RowBox[{"productValues", "[", 
+               RowBox[{"[", "k", "]"}], "]"}]}], ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"productProbs", "[", 
+                RowBox[{"[", "k", "]"}], "]"}], "+=", "productProb"}], 
+              ";"}]}], "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+           ";"}]}], "]"}], "\[IndentingNewLine]", ";"}]}], "]"}]}], 
+    "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Applying", " ", "the", " ", "Central", " ", "Limit", " ", "Theorem", " ",
+      "to", " ", "the", " ", "n", " ", "sums", " ", "of", " ", "the", " ", 
+     "product", " ", 
+     RowBox[{"coefficients", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"numSums", "=", 
+     RowBox[{"2", "^", "11"}]}], ";", 
+    RowBox[{"(*", 
+     RowBox[{
+     "Number", " ", "of", " ", "trials", " ", "to", " ", "obtain", " ", "the",
+       " ", "approximate", " ", 
+      RowBox[{"distribution", "."}]}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"finalDistValues", " ", "=", " ", 
+     RowBox[{"Table", "[", 
+      RowBox[{"0", ",", "numSums"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Piecewise", " ", "probability", " ", "distribution", " ", "function", 
+     " ", "for", " ", "product", " ", "terms", " ", 
+     RowBox[{"xy", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"piece", "[", "x_", "]"}], "=", " ", 
+     RowBox[{"Piecewise", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"0.000488281", ",", " ", 
+          RowBox[{"x", "\[Equal]", 
+           RowBox[{"-", "9"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.00585938", ",", " ", 
+          RowBox[{"x", "\[Equal]", 
+           RowBox[{"-", "6"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.0175781", ",", " ", 
+          RowBox[{"x", "\[Equal]", 
+           RowBox[{"-", "4"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.0146484", ",", " ", 
+          RowBox[{"x", "\[Equal]", 
+           RowBox[{"-", "3"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.0878906", ",", " ", 
+          RowBox[{"x", "\[Equal]", 
+           RowBox[{"-", "2"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.109863", ",", " ", 
+          RowBox[{"x", "\[Equal]", 
+           RowBox[{"-", "1"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.527344", ",", " ", 
+          RowBox[{"x", "\[Equal]", "0"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.109863", ",", " ", 
+          RowBox[{"x", "\[Equal]", "1"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.0878906", ",", " ", 
+          RowBox[{"x", "\[Equal]", "2"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.0146484", ",", " ", 
+          RowBox[{"x", "\[Equal]", "3"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.0175781", ",", " ", 
+          RowBox[{"x", "\[Equal]", "4"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.00585938", ",", " ", 
+          RowBox[{"x", "\[Equal]", "6"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"0.000488281", ",", " ", 
+          RowBox[{"x", "\[Equal]", "9"}]}], "}"}]}], "}"}], 
+      "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Computing", " ", "the", " ", "probability", " ", "distribution", " ", 
+     "of", " ", "the", " ", "n", " ", "sums", " ", "of", " ", "the", " ", 
+     "product", " ", "coefficients"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"For", "[", 
+    RowBox[{
+     RowBox[{"i", "=", "1"}], ",", " ", 
+     RowBox[{"i", "\[LessEqual]", " ", "numSums"}], ",", " ", 
+     RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"samples", " ", "=", " ", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"RandomVariate", "[", 
+          RowBox[{"ProbabilityDistribution", "[", 
+           RowBox[{
+            RowBox[{"piece", "[", "x", "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", 
+              RowBox[{"-", "9"}], ",", "9", ",", "1"}], "}"}]}], "]"}], "]"}],
+          ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"finalDistValues", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], "+=", " ", 
+         RowBox[{"samples", "[", 
+          RowBox[{"[", "j", "]"}], "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", "n"}], "}"}]}], "]"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Variance", " ", "of", " ", "final", " ", 
+     RowBox[{"distribution", "."}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"Variance", "[", "finalDistValues", "]"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Histogram", " ", "of", " ", "final", " ", "distribution", " ", "with", 
+     " ", "approximating", " ", "normal", " ", "distribution", " ", "N", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"0", ",", "48"}], ")"}], "."}]}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"Histogram", "[", 
+      RowBox[{
+      "finalDistValues", ",", "50", ",", "\"\<ProbabilityDensity\>\""}], 
+      "]"}], ",", 
+     RowBox[{"Plot", "[", 
+      RowBox[{
+       RowBox[{"PDF", "[", 
+        RowBox[{
+         RowBox[{"NormalDistribution", "[", 
+          RowBox[{"0", ",", "48"}], "]"}], ",", "x"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "150"}], ",", "150"}], "}"}], ",", 
+       RowBox[{"PlotStyle", "\[Rule]", "Thick"}]}], "]"}]}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.835258263300022*^9, 3.835258484901794*^9}, {
+   3.835258515868436*^9, 3.8352585437217813`*^9}, {3.835258656287171*^9, 
+   3.835258972503373*^9}, {3.8352591300480275`*^9, 3.835259201128682*^9}, {
+   3.83525924794132*^9, 3.835259255584424*^9}, {3.8352601746824403`*^9, 
+   3.835260299922665*^9}, {3.835260338484434*^9, 3.8352603501109066`*^9}, {
+   3.835260383370179*^9, 3.8352603863943977`*^9}, {3.8352604167927237`*^9, 
+   3.835260416966937*^9}, {3.8352604892438297`*^9, 3.8352606382570763`*^9}, {
+   3.8352606814131284`*^9, 3.8352607004534597`*^9}, {3.835262701640814*^9, 
+   3.835262790225279*^9}, {3.83526285083934*^9, 3.835262854783573*^9}, {
+   3.8352628880970745`*^9, 3.83526291127028*^9}, {3.8352629435155115`*^9, 
+   3.835263109347349*^9}, {3.8352631530884457`*^9, 3.835263184788088*^9}, {
+   3.8352632538162656`*^9, 3.8352632607054253`*^9}, 3.835263396928311*^9, {
+   3.835263460950244*^9, 3.8352634910761013`*^9}, {3.8352638158186274`*^9, 
+   3.8352638164808254`*^9}, {3.8352639165178027`*^9, 
+   3.8352639313641043`*^9}, {3.83526402707616*^9, 3.835264036986699*^9}, {
+   3.835269824786565*^9, 3.835269873322047*^9}, {3.835275040530182*^9, 
+   3.8352750411862764`*^9}, {3.83527641899631*^9, 3.8352764251806498`*^9}, {
+   3.835277948330424*^9, 3.835277953287524*^9}, {3.835278695319167*^9, 
+   3.835278725608076*^9}, {3.8352795456029243`*^9, 3.835279576194532*^9}, {
+   3.8352853610890045`*^9, 3.835285361680458*^9}, {3.8354355791714396`*^9, 
+   3.835435740456401*^9}, {3.8354359206138945`*^9, 3.8354359420883493`*^9}, {
+   3.835436000887227*^9, 3.835436281192308*^9}, {3.8354363344611387`*^9, 
+   3.835436375657976*^9}, {3.835436453420162*^9, 3.835436754720598*^9}, {
+   3.835437156487163*^9, 3.8354372051486397`*^9}, {3.8354374361983395`*^9, 
+   3.835437548866103*^9}, {3.8354376500095043`*^9, 3.8354376504074707`*^9}, {
+   3.835438512262619*^9, 3.835438566734508*^9}, {3.835438705301386*^9, 
+   3.8354387531082225`*^9}, {3.8354388489557343`*^9, 3.835438881775756*^9}, {
+   3.8354389424813395`*^9, 3.8354389452082586`*^9}, {3.8354390051297607`*^9, 
+   3.8354390141197176`*^9}, {3.835439066167873*^9, 3.8354391242003345`*^9}, {
+   3.835440702945391*^9, 3.8354407649365144`*^9}, {3.835442163662221*^9, 
+   3.8354422436348796`*^9}, {3.8354423441858306`*^9, 
+   3.8354427876102705`*^9}, {3.8354526665963087`*^9, 
+   3.8354528151692643`*^9}, {3.8354528526804605`*^9, 3.835452950274044*^9}, 
+   3.8354530770290575`*^9, {3.8354536081895027`*^9, 3.8354536290401917`*^9}, {
+   3.8354536933825235`*^9, 3.8354537386896586`*^9}, {3.835453822839879*^9, 
+   3.835453838610338*^9}, {3.8354538740047636`*^9, 3.835453878011343*^9}, {
+   3.8354539103130965`*^9, 3.835453974612995*^9}, {3.835454134679364*^9, 
+   3.835454273692373*^9}, {3.835454585383872*^9, 3.835454593699254*^9}, {
+   3.835454788860793*^9, 3.8354549378599753`*^9}, {3.8354550326002026`*^9, 
+   3.8354550329315367`*^9}, {3.835455166868779*^9, 3.835455178488256*^9}, {
+   3.835455219836357*^9, 3.8354552218272395`*^9}, {3.8354555856697736`*^9, 
+   3.8354556378170123`*^9}, {3.8354628375945864`*^9, 
+   3.8354629095860577`*^9}, {3.8354629443454533`*^9, 
+   3.8354629573384542`*^9}, {3.8354631213229866`*^9, 3.835463122608222*^9}, {
+   3.8354631567905707`*^9, 3.8354632480482054`*^9}, {3.835463305485574*^9, 
+   3.835463331190009*^9}, {3.8354633629152956`*^9, 3.835463542223111*^9}, {
+   3.8354635989641867`*^9, 3.8354636322568426`*^9}, 3.8354636738526125`*^9, {
+   3.8354638312551327`*^9, 3.8354638477352934`*^9}, {3.835463880107414*^9, 
+   3.8354639064957576`*^9}, {3.8354648303045635`*^9, 
+   3.8354648647236805`*^9}, {3.8354649127592363`*^9, 
+   3.8354649545829754`*^9}, {3.835465169847322*^9, 3.83546518884052*^9}, {
+   3.8354652196469975`*^9, 3.835465223087382*^9}, {3.8354652868835087`*^9, 
+   3.835465303664646*^9}, 3.835465830883461*^9, {3.8355094487939315`*^9, 
+   3.8355094515175037`*^9}, 3.8355095168556967`*^9, {3.835509592940242*^9, 
+   3.8355097207148943`*^9}, {3.8355097707932477`*^9, 3.835510041204957*^9}, {
+   3.8355102646199875`*^9, 3.8355104317500706`*^9}, {3.835510473144208*^9, 
+   3.835510488551293*^9}, {3.8355105568128924`*^9, 3.8355105640011177`*^9}, {
+   3.835510787721219*^9, 3.8355108663869667`*^9}, {3.8355109508139863`*^9, 
+   3.8355109731131887`*^9}, {3.83551100377339*^9, 3.8355110072266693`*^9}, {
+   3.8355110879610343`*^9, 3.835511088338585*^9}, {3.835511202692415*^9, 
+   3.835511311513181*^9}, {3.8355117072835197`*^9, 3.83551170775062*^9}, {
+   3.8355117864346876`*^9, 3.8355118702489405`*^9}, {3.8355153561237745`*^9, 
+   3.83551537511385*^9}, {3.835515559284217*^9, 3.835515566381321*^9}, {
+   3.8355156052551003`*^9, 3.835515606731985*^9}, {3.835515714329156*^9, 
+   3.8355157223488474`*^9}, 3.835515764222972*^9, {3.835515837928795*^9, 
+   3.8355163037178183`*^9}, {3.8355296467943954`*^9, 
+   3.8355296546995068`*^9}, {3.835529715915948*^9, 3.835529723684442*^9}, {
+   3.835529789190164*^9, 3.8355297945887365`*^9}, {3.835536089426416*^9, 
+   3.83553609627831*^9}, {3.8355361805324335`*^9, 3.835536181453047*^9}, 
+   3.835548231800252*^9, {3.837257860298671*^9, 3.8372578608854723`*^9}, {
+   3.837257918653572*^9, 3.8372579313163967`*^9}, {3.83725797862885*^9, 
+   3.837258028193909*^9}, {3.8372584351231856`*^9, 3.837258442568167*^9}, {
+   3.837258517908497*^9, 3.837258599876588*^9}, {3.8372586464952106`*^9, 
+   3.837258764423381*^9}, 3.8372588456082897`*^9, 3.8381950475454693`*^9, {
+   3.838195293495793*^9, 3.8381953800985126`*^9}, {3.838195411767976*^9, 
+   3.838195416419027*^9}, {3.838195563953653*^9, 3.8381955838762655`*^9}, {
+   3.838195623315344*^9, 3.838195636587122*^9}, 3.838198639663289*^9, {
+   3.8382002585530005`*^9, 3.838200261244003*^9}, {3.8382008801255274`*^9, 
+   3.8382009403842883`*^9}, {3.8382010338016987`*^9, 3.838201075472787*^9}, 
+   3.8382011086412115`*^9, 3.838201275416559*^9, {3.838201310539966*^9, 
+   3.8382013240691304`*^9}, {3.8382016754123588`*^9, 
+   3.838201677476695*^9}},ExpressionUUID->"55d02632-1a39-4af4-86cd-\
+bdd3be26b9e9"]
+},
+WindowSize->{1141.2, 574.8},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrintingCopies->1,
+PrintingPageRange->{32000, 32000},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{594.96, 842.04}},
+Magnification:>1.1 Inherited,
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"99d87c4c-6909-4974-a1ef-f53f97897549"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 18304, 402, 1271, "Input",ExpressionUUID->"55d02632-1a39-4af4-86cd-bdd3be26b9e9"]
+}
+]
+*)
+

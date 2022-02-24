@@ -1,0 +1,26 @@
+target bound = 3.02231434638009e+23
+q^2/4 = 3.0223143463800906e+23
+Correct ? True
+varphi_v has average  7.25355443131222e+24
+Chernoff-Cramer Bound 9.78105952744429e-27  = 2^ -86.4020678092357
+
+####
+#### Conclusion of Lemma 5.4 :
+####
+with parameter k= 3 and parameter n =  512.0 (V_{v,K} has dimension 8n)
+The bound ||V_{v,K}||_2^2 <= 5.03271846189252e+44  fails with probability 
+less than 2^ -78.4951772136272
+####
+#### Theorem 5.5 :
+####
+subgaussian parameter sigma =  1.22474487139159
+tailcut parameter tau =  11
+tailcut value ||V_{v,K}||* sigma * tau =  3.02231434638009e+23
+sub-gaussian tail-bound (Lemma 5.3): 2^ -87.2830499737823
+failure proba per bit-agreement and per v
+
+Final bound ||<(~s', ~s), V_{v,K}>|| <= 3.02231434638009e+23
+fails with probability at most 2^
+-77.385218324055
+
+Process finished with exit code 0

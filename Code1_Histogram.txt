@@ -1,0 +1,78 @@
+(*Approximating the probability distribution using the Central Limit
+Theorem*)
+
+n = 2^10;(*Degree of polynomial x^n+1*)
+B = 3; (*Bounding value of support*)
+m = 2*B;
+
+(*Entries will be probabilites for each value between and including 
+-B and B.*)
+centredBinomialValues = Range[-B, B];
+centredBinomialPDF = Table[0, m + 1];
+
+(*Set the probability for the value 0*)
+centredBinomialPDF[[B + 1]] = Binomial[m, B - 0]*(0.5)^m;
+
+(*Symmetric distribution so P[X=x] = P[X=-x].*)
+For[i = 1, i <= B, i++,
+ centredBinomialPDF[[(B + 1) - i]] = Binomial[m, B - i]*(0.5)^m;
+ centredBinomialPDF[[(B + 1) + i]] = Binomial[m, B - i]*(0.5)^m;
+]
+
+(*Product values and respective probabilities.*)
+productValues = {-9, -6, -4, -3, -2, -1, 0, 1, 2, 3, 4, 6, 9};
+productProbs = Table[0, Length[productValues]];
+productValue = 0;
+productProb = 0;
+
+(*Find the probability of xy for each pair (x,y) where x,y are in
+centredBinomialValues.*)
+
+For[i = 1, i <= Length[centredBinomialValues], i++,
+ For[j = 1, j <= Length[centredBinomialValues], j++,
+  productValue = centredBinomialValues[[i]]*centredBinomialValues[[j]];
+  productProb = centredBinomialPDF[[i]]*centredBinomialPDF[[j]];
+  For[k = 1, k <= Length[productValues], k++,
+   If[productValue == productValues[[k]],
+     productProbs[[k]] += productProb;
+     ]
+    ;]
+  ;]
+ ]
+
+(*Applying the Central Limit Theorem to the n sums of the product
+coefficients.*)
+
+numSums = 2^11; (*Number of trials to obtain the approximate
+distribution.*)
+finalDistValues = Table[0, numSums];
+
+(*Piecewise probability distribution function for product terms xy.*)
+
+piece[x_] = 
+  Piecewise[{{0.000488281, x == -9}, {0.00585938, 
+     x == -6}, {0.0175781, x == -4}, {0.0146484, 
+     x == -3}, {0.0878906, x == -2}, {0.109863, x == -1}, {0.527344, 
+     x == 0}, {0.109863, x == 1}, {0.0878906, x == 2}, {0.0146484, 
+     x == 3}, {0.0175781, x == 4}, {0.00585938, 
+     x == 6}, {0.000488281, x == 9}}
+   ];
+
+
+(*Computing the probability distribution of the n sums of the product
+coefficients*)
+For[i = 1, i <= numSums, i++,
+ samples = 
+  Table[RandomVariate[
+    ProbabilityDistribution[piece[x], {x, -9, 9, 1}]], n];
+ Do[finalDistValues[[i]] += samples[[j]], {j, n}];
+ ]
+
+(*Variance of final distribution.*)
+Variance[finalDistValues]
+
+(*Histogram of final distribution with approximating normal
+distribution N(0,48).*)
+Show[Histogram[finalDistValues, 50, "ProbabilityDensity"], 
+ Plot[PDF[NormalDistribution[0, 48], x], {x, -150, 150}, 
+  PlotStyle -> Thick]]
